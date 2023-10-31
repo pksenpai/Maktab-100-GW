@@ -1,0 +1,284 @@
+(base) nasirianfar@nasirianfar-HP-EliteBook-840-G1:~$ sudo -i -u postgres
+[sudo] password for nasirianfar:
+postgres@nasirianfar-HP-EliteBook-840-G1:~$ psql
+psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# \l
+postgres=# \q
+postgres@nasirianfar-HP-EliteBook-840-G1:~$ psql
+psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# \U
+invalid command \U
+Try \? for help.
+postgres=# \u
+invalid command \u
+Try \? for help.
+postgres=# \du
+postgres=# create database Maktab100_G4_Hospital;
+CREATE DATABASE
+postgres=# grant all privileges on database Maktab100_G4_Hospital to mamad;
+GRANT
+postgres=# \l
+postgres=# create table patient(first_name varchar(50)
+postgres(# q
+postgres(# ;
+postgres(# )
+postgres-# ;
+ERROR:  syntax error at or near "q"
+LINE 2: q
+        ^
+postgres=# drop table patient
+postgres-# \dt
+Did not find any relations.
+postgres-# create table patient(patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national code int UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), health_insurance_id int, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  syntax error at or near "create"
+LINE 2: create table patient(patient_id serial PRIMARY KEY, first_na...
+        ^
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national code int UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), health_insurance_id int, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  syntax error at or near "int"
+LINE 1: ...LL, last_name varchar(50) NOT NULL, national code int UNIQUE...
+                                                             ^
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), health_insurance_id int, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  syntax error at or near "INT"
+LINE 1: ...LL, last_name varchar(50) NOT NULL, national code INT UNIQUE...
+                                                             ^
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national_code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), health_insurance_id int, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+CREATE TABLE
+postgres=# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner
+--------+---------+-------+----------
+ public | patient | table | postgres
+(1 row)
+
+postgres=# CREATE TABLE doctor (doctor__id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), specialization varchar(50) NOT NULL,medical_council_code int UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  syntax error at or near "INT"
+LINE 1: ...LL, last_name varchar(50) NOT NULL, national code INT UNIQUE...
+                                                             ^
+postgres=# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner
+--------+---------+-------+----------
+ public | patient | table | postgres
+(1 row)
+
+postgres=# CREATE TABLE doctor (doctor_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national_code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255), specialization varchar(50) NOT NULL,medical_council_code int UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+CREATE TABLE
+postgres=# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner
+--------+---------+-------+----------
+ public | doctor  | table | postgres
+ public | patient | table | postgres
+(2 rows)
+
+postgres=# drop table patient
+postgres-# ;
+DROP TABLE
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255),health_insurance_id int REFERENCES health_insurance(health_insurance_id), password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  syntax error at or near "INT"
+LINE 1: ...LL, last_name varchar(50) NOT NULL, national code INT UNIQUE...
+                                                             ^
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national_code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255),health_insurance_id int REFERENCES health_insurance(health_insurance_id), password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+ERROR:  relation "health_insurance" does not exist
+postgres=# ^C
+postgres=# CREATE TABLE^C
+postgres=# CREATE TABLE health_insurance(health_insurance_id serial PRIMARY KEY,company_name varchar(30) NOT NULL,phone varchar(20) NOT NULL, address varchar(255), email varchar(255), payment_discount_percentage int NOT NULL)
+postgres-# ;
+CREATE TABLE
+postgres=# CREATE TABLE patient (patient_id serial PRIMARY KEY, first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, national_code INT UNIQUE NOT NULL, gender varchar(20) NOT NULL, birth_date varchar(20) NOT NULL, phone varchar(20) NOT NULL, email varchar(255), address varchar(255),health_insurance_id int REFERENCES health_insurance(health_insurance_id), password VARCHAR ( 50 ) NOT NULL, created_on TIMESTAMP NOT NULL, login_status bool);
+CREATE TABLE
+postgres=# \dt+
+postgres=# CREATE TABLE appoinment(^C
+postgres=# CREATE TABLE appoinment(appoinment_id serial PRIMARY KEY, patient_id int REFERENCES patient(patient_id),doctor_id int REFERENCES doctor(doctor_id), date_time varChar(40) NOT NULL, reason varchar(255));
+CREATE TABLE
+postgres=# dt
+postgres-# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+(4 rows)
+
+postgres-# CREATE TABLE patient_history(patient_history_id serial PRIMARY KEY,patient_id int REFERENCES patient(patient_id), doctor_id int REFERENCES doctor(doctor_id),date varChar(20) NOT NULL, diagnosis varchar(255), drugـused varchar(255), note varchar(255));
+ERROR:  syntax error at or near "dt"
+LINE 1: dt
+        ^
+postgres=# CREATE TABLE patient_history(patient_history_id serial PRIMARY KEY,patient_id int REFERENCES patient(patient_id), doctor_id int REFERENCES doctor(doctor_id),date varChar(20) NOT NULL, diagnosis varchar(255), drugـused varchar(255), note varchar(255));
+CREATE TABLE
+postgres=# \dt doctor
+         List of relations
+ Schema |  Name  | Type  |  Owner
+--------+--------+-------+----------
+ public | doctor | table | postgres
+(1 row)
+
+postgres=# \dt+ doctor
+postgres=# \d+
+postgres=# \d doctor
+postgres=# CREATE TABLE patient_bill(patient_bill_id serial PRIMARY KEY, patient_history_id int  REFERENCES patient_history(patient_history_id), total_cost int NOT NULL, patient_Payable int NOT NULL, date timestamp, transaction_status bool);
+CREATE TABLE
+postgres=# dt
+postgres-# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+ public | patient_bill     | table | postgres
+ public | patient_history  | table | postgres
+(6 rows)
+
+postgres-# \db
+       List of tablespaces
+    Name    |  Owner   | Location
+------------+----------+----------
+ pg_default | postgres |
+ pg_global  | postgres |
+(2 rows)
+
+postgres-# \d
+                            List of relations
+ Schema |                   Name                   |   Type   |  Owner
+--------+------------------------------------------+----------+----------
+ public | appoinment                               | table    | postgres
+ public | appoinment_appoinment_id_seq             | sequence | postgres
+ public | doctor                                   | table    | postgres
+ public | doctor_doctor_id_seq                     | sequence | postgres
+ public | health_insurance                         | table    | postgres
+ public | health_insurance_health_insurance_id_seq | sequence | postgres
+ public | patient                                  | table    | postgres
+ public | patient_bill                             | table    | postgres
+ public | patient_bill_patient_bill_id_seq         | sequence | postgres
+ public | patient_history                          | table    | postgres
+ public | patient_history_patient_history_id_seq   | sequence | postgres
+ public | patient_patient_id_seq                   | sequence | postgres
+(12 rows)
+
+postgres-# \l
+postgres-# \l
+postgres-# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+ public | patient_bill     | table | postgres
+ public | patient_history  | table | postgres
+(6 rows)
+
+postgres-# \l
+postgres-# SELECT version();
+ERROR:  syntax error at or near "dt"
+LINE 1: dt
+        ^
+postgres=# SELECT version();
+postgres=# server: localhost
+postgres-# \d doctor
+postgres-# \d patient
+postgres-# \d appoinment
+postgres-# \d health_insurance
+postgres-# ^C
+postgres=# \d patient_history
+postgres=# \d patient_history
+postgres=# \drop table patient_history
+invalid command \drop
+Try \? for help.
+postgres=# CREATE TABLE patient_history(patient_history_id serial PRIMARY KEY,patient_id int REFERENCES patient(patient_id), doctor_id int REFERENCES doctor(doctor_id),date varChar(20) NOT NULL, diagnosis varchar(255), drugـused varchar(255),prescription varchar(255), note varchar(255));
+ERROR:  relation "patient_history" already exists
+postgres=# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+ public | patient_bill     | table | postgres
+ public | patient_history  | table | postgres
+(6 rows)
+
+postgres=# \drop table patient_history
+invalid command \drop
+Try \? for help.
+postgres=# drop table patient_history
+postgres-# CREATE TABLE patient_history(patient_history_id serial PRIMARY KEY,patient_id int REFERENCES patient(patient_id), doctor_id int REFERENCES doctor(doctor_id),date varChar(20) NOT NULL, diagnosis varchar(255), drugـused varchar(255),prescription varchar(255), note varchar(255));
+ERROR:  syntax error at or near "CREATE"
+LINE 2: CREATE TABLE patient_history(patient_history_id serial PRIMA...
+        ^
+postgres=# ;
+postgres=# CREATE TABLE patient_history(patient_history_id serial PRIMARY KEY,patient_id int REFERENCES patient(patient_id), doctor_id int REFERENCES doctor(doctor_id),date varChar(20) NOT NULL, diagnosis varchar(255), drugـused varchar(255),prescription varchar(255), note varchar(255));
+ERROR:  relation "patient_history" already exists
+postgres=# \d patient_history
+postgres=# drop table patient_history
+postgres-# ;
+ERROR:  cannot drop table patient_history because other objects depend on it
+DETAIL:  constraint patient_bill_patient_history_id_fkey on table patient_bill depends on table patient_history
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+postgres=# alter table patient_history alter column prescription type varchar(255)
+postgres-# ;
+ERROR:  column "prescription" of relation "patient_history" does not exist
+postgres=# alter table patient_history alter column prescription type varchar(255)
+;
+ERROR:  column "prescription" of relation "patient_history" does not exist
+postgres=# alter table patient_history add  column prescription varchar(255);
+ALTER TABLE
+postgres=# \d patient_history
+postgres=# ALTER TABLE patient_history ALTER COLUMN note TYPE text;
+ALTER TABLE
+postgres=# \d patient_history
+postgres=# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+ public | patient_bill     | table | postgres
+ public | patient_history  | table | postgres
+(6 rows)
+
+postgres=# \d patient_bill
+postgres=# alter table patient_bill  add  column insurance_contribution int;
+ALTER TABLE
+postgres=# \d patient_bill
+postgres=# \l
+postgres=# q
+postgres-# \q
+postgres@nasirianfar-HP-EliteBook-840-G1:~$ psql
+psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# \l
+postgres=# \t
+Tuples only is on.
+postgres=# \dt
+ public | appoinment       | table | postgres
+ public | doctor           | table | postgres
+ public | health_insurance | table | postgres
+ public | patient          | table | postgres
+ public | patient_bill     | table | postgres
+ public | patient_history  | table | postgres
+
+postgres=# \c maktab100_g4_hospital
+You are now connected to database "maktab100_g4_hospital" as user "postgres".
+maktab100_g4_hospital=# \dt
+Did not find any relations.
+maktab100_g4_hospital=# \c
+You are now connected to database "maktab100_g4_hospital" as user "postgres".
+maktab100_g4_hospital=# \c postgres
+You are now connected to database "postgres" as user "postgres".
+postgres=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO mamad;
+GRANT
+postgres=#
