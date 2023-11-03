@@ -13,10 +13,10 @@ def create_table_patient():
         phone VARCHAR(15) NOT NULL ,
         email VARCHAR(50),
         address TEXT NOT NULL , 
-        national_code INT NOT NULL UNIQUE ,
-        health_insurance_id VARCHAR(50),
         password VARCHAR(255) NOT NULL ,
-        login_status BOOLEAN NOT NULL 
+        login_status BOOLEAN NOT NULL ,
+        national_code VARCHAR(25) NOT NULL UNIQUE ,
+        health_insurance_id VARCHAR(50) 
     );
     """
     cur.execute(query)
@@ -35,11 +35,12 @@ def create_table_doctor():
         phone VARCHAR(15) NOT NULL ,
         email VARCHAR(50),
         address TEXT NOT NULL ,
-        national_code VARCHAR(20) UNIQUE ,
-        medical_council_code INT NOT NULL UNIQUE ,
-        specialization VARCHAR(50),
         password VARCHAR(255) NOT NULL ,
-        login_status BOOLEAN NOT NULL 
+        login_status BOOLEAN NOT NULL ,
+        national_code VARCHAR(20) UNIQUE NOT NULL ,
+        medical_council_code VARCHAR(25) NOT NULL UNIQUE ,
+        specialization VARCHAR(50)
+         
     );
     """
     cur.execute(query)
@@ -49,13 +50,13 @@ def create_table_doctor():
 def create_table_appointment():
     conn, cur, local_connection = connect(None, None)
     query = """
-    CREATE TABLE appoinment (
-        appoinment_id SERIAL PRIMARY KEY ,
+    CREATE TABLE appointment (
+        appointment_id SERIAL PRIMARY KEY ,
         patient_id INT,
         FOREIGN KEY (patient_id) REFERENCES patient (patient_id) ,
         doctor_id INT,
         FOREIGN KEY (doctor_id) REFERENCES doctor (doctor_id) ,
-        date_time TIMESTAMP NOT NULL,
+        date_time VARCHAR(50) NOT NULL,
         reason  VARCHAR(100)
     );
     """
@@ -117,5 +118,5 @@ def create_table_patient_bill():
     conn.commit()
 
 
-if __name__ == '__main__':
-    create_table_doctor(True)
+# if __name__ == '__main__':
+#     create_table_doctor(True)
