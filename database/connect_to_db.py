@@ -30,3 +30,5 @@ def connect(conn, cur):
             print(e)
             conn, cur, local_connection = None, None, None
     return conn, cur, local_connection
+
+

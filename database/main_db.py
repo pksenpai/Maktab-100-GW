@@ -1,5 +1,7 @@
 from create_tables import *
 from insert_data import *
+from connect_to_db import connect
+
 
 # create_table_doctor()
 # create_table_health_insurance()
@@ -71,11 +73,112 @@ from insert_data import *
 #     prescription = 'die'
 #     PTH.insert_to_database(patient_id, doctor_id, diagnosis, drug_used, prescription)
 
-with InsertToPatientBillTable() as PB:
-    patient_history_id = 1
-    total_cost = 200
-    patient_payable = 100
-    insurance_contribution = 50
-    transaction_status = True
-    PB.insert_to_database(patient_history_id, total_cost, patient_payable, insurance_contribution, transaction_status)
+# with InsertToPatientBillTable() as PB:
+#     patient_history_id = 1
+#     total_cost = 200
+#     patient_payable = 100
+#     insurance_contribution = 50
+#     transaction_status = True
+#     PB.insert_to_database(patient_history_id, total_cost, patient_payable, insurance_contribution, transaction_status)
+
+# def register_doctor():
+#     first_name = input("Please enter your first name: ")
+#     last_name = input("Please enter your last name: ")
+#     gender = input("Please enter your gender: ")
+#     birth_date = input("Please enter your birth_date: ")
+#     phone = input("Please enter your phone: ")
+#     email = input("Please enter your email: ")
+#     address = input("Please enter your address: ")
+#     password = input("Please enter your password: ")
+#     national_code = input("Please enter your national code: ")
+#     medical_council_code = input("Please enter your medical_council_code: ")
+#     specialization = input("Please enter your specialization: ")
+#     login_status = False
+#
+#     with InsertToDoctorTable() as DC:
+#         DC.insert_to_database(first_name, last_name, gender, birth_date,
+#                               phone, email, address, password,
+#                               login_status,
+#                               national_code,
+#                               medical_council_code, specialization)
+# register_doctor()
+
+
+# def login_doctor():
+#     user_name = input("Please enter your user name: ")
+#     input_password = input("Please enter your password: ")
+#
+#     conn, cur, local_connection = connect(None, None)
+#     query = """select  * FROM doctor
+#                 WHERE national_code = %s AND password = %s;
+#                  """
+#     data = (user_name, input_password)
+#     cur.execute(query, data)
+#     result = cur.fetchone()
+#     if result:
+#         query = """UPDATE doctor
+#         SET login_status = True
+#         """
+#     cur.execute(query)
+#     conn.commit()
+#
+# def logout_doctor():
+#
+#     conn, cur, local_connection = connect(None, None)
+#     query = """UPDATE doctor
+#         SET login_status = FALSE
+#         """
+#     cur.execute(query)
+#     conn.commit()
+
+# def register_patient():
+#     first_name = input("Please enter your first name: ")
+#     last_name = input("Please enter your last name: ")
+#     gender = input("Please enter your gender: ")
+#     birth_date = input("Please enter your birth_date: ")
+#     phone = input("Please enter your phone: ")
+#     email = input("Please enter your email: ")
+#     address = input("Please enter your address: ")
+#     password = input("Please enter your password: ")
+#     national_code = input("Please enter your national code: ")
+#     health_insurance_id = input("Please enter your  health_insurance_id: ")
+#     login_status = False
+#     with InsertToPatientTable() as PT:
+#         PT.insert_to_database(first_name, last_name, gender, birth_date,
+#                               phone, email, address, password, login_status,
+#                               national_code, health_insurance_id)
+#
+#
+# register_patient()
+
+# def login_patient():
+#     user_name = input("Please enter your user name: ")
+#     input_password = input("Please enter your password: ")
+#
+#     conn, cur, local_connection = connect(None, None)
+#     query = """select  * FROM patient
+#                 WHERE phone = %s AND password = %s;
+#                 """
+#     data = (user_name, input_password)
+#     cur.execute(query, data)
+#     result = cur.fetchone()
+#     if result:
+#         query = """UPDATE patient
+#         SET login_status = True
+#         """
+#     cur.execute(query)
+#     conn.commit()
+#
+#
+# login_patient()
+#
+# def logout_patient():
+#
+#     conn, cur, local_connection = connect(None, None)
+#     query = """UPDATE patient
+#         SET login_status = FALSE
+#         """
+#     cur.execute(query)
+#     conn.commit()
+
 

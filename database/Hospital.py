@@ -25,15 +25,15 @@ class User:
         self.gender = gender
         self.birth_date = birth_date
         self.address = address
-        self.password = valid_pass(password)
+        self.password = password
         self.login_status = False
         self.national_code = national_code
 
 
 class Doctor(User):
     def __init__(self, first_name, last_name, gender, birth_date,
-                 phone, email, address, password,
-                 login_status, national_code,
+                 phone, email, address,
+                 password, login_status,national_code,
                  medical_council_code, specialization):
         super().__init__(first_name, last_name, gender, birth_date,
                          phone, email, address, password,
