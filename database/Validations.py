@@ -17,7 +17,7 @@ def valid_login(input_data: tuple):
     
     conn, cur, local_connection = connect(None, None)
     query = """
-            SELECT national_code, password FROM %s
+            SELECT first_name, last_name FROM %s
             WHERE national_code = %s AND password = %s;
             """
     cur.execute(query, input_data)
