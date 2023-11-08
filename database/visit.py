@@ -1,7 +1,7 @@
 from database import Database
 
 
-def visit_reserve(date_time, reason, name, gender):
+def reserve(date_time, reason, name, gender):
     with Database() as db:
         query = """                   3###############3################################### HERE change the query
                 SELECT payment_discount_percentage 
@@ -38,5 +38,15 @@ def visit_reserve(date_time, reason, name, gender):
             elif gender=='f':
                 return f'ms.{name} your visit successfuly reserved at {date_time}'
             
-def visit_history(national_code):
-    pass
+def history(national_code):
+    with Database() as db:
+        query = """
+                SELECT *
+                FROM doctor INNER JOIN appointment ON doctor.doctor_id==appointment.appointment_id
+                LEFT JOIN patient ON appointment.appointment_id=patient.patient_id;
+                WHERE national_code = %s;
+                """
+        db.cur.execute(query, national_code)
+        history = db.cur.fetchone()
+        return history
+    

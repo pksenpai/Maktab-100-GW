@@ -1,7 +1,7 @@
 from connect_to_db import Database
 from exception import MyException as exc
 import Validations as val
-from visit import *
+import visit
 
 
 #=============================[USER]=============================>
@@ -122,8 +122,10 @@ class Patient(User):
         self.health_insurance_id = None
 
     def visit_history(self):
-        pass
-    
+        history = visit.history(self.national_code)
+        for data, num in enumerate(history, start=1):
+            print(f'{num}--> {data}')
+        
     def visit_reserve(self):
         while dt_flag==False:
             date_time = input("choose a date & time for visit[day/month/year hour:min]: ")
@@ -132,7 +134,7 @@ class Patient(User):
         
         reason = input()
         name = self.first_name, self.last_name
-        print(visit_reserve(date_time, reason, name, self.gender))
+        print(visit.reserve(date_time, reason, name, self.gender))
         
     def patient_register(self):
         self.national_code = input("Please enter your national code: ")

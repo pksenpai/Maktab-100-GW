@@ -12,15 +12,6 @@ class HealthInsurance:
         self.email = email
         self.payment_discount_percentage = payment_discount_percentage
         
-
-class Appointment:
-    def __init__(self, patient_id, doctor_id, date_time, reason):
-        self.patient_id = patient_id
-        self.doctor_id = doctor_id
-        self.date_time = date_time
-        self.reason = reason
-
-
 class PatientHistory:
     date = datetime.now()
 

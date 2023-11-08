@@ -20,10 +20,3 @@ from connect_to_db import connect
 #     prescription = 'die'
 #     PTH.insert_to_database(patient_id, doctor_id, diagnosis, drug_used, prescription)
 
-# with InsertToPatientBillTable() as PB:
-#     patient_history_id = 1
-#     total_cost = 200
-#     patient_payable = 100
-#     insurance_contribution = 50
-#     transaction_status = True
-#     PB.insert_to_database(patient_history_id, total_cost, patient_payable, insurance_contribution, transaction_status)
