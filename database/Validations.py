@@ -5,9 +5,8 @@ from connect_to_db import Database
 
 
 def valid_pass(password):
-    pass_regex = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-    print(password)
-    if re.match(pass_regex, password):
+    PASSWORD_regex = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+    if re.match(PASSWORD_regex, password):
         return hashlib.sha256(str(password).encode('utf-8')).hexdigest(), True
     else:
         return exc.InvalidPassword(), False        
@@ -23,7 +22,8 @@ def valid_login(input_data: tuple):
     
     with Database() as db:
         query = """
-                SELECT gender, first_name, last_name FROM %s
+                SELECT gender, first_name, last_name 
+                FROM %s
                 WHERE national_code = %s AND password = %s;
                 """
         
@@ -32,6 +32,35 @@ def valid_login(input_data: tuple):
         
     return validation
 
+def valid_datetime(date_time):
+    # day/month/year hour:min
+    DATETIME_regex = r"^\d{2}/\d{2}/\d{4} \d{2}:\d{2}$"
+    if re.match(DATETIME_regex, date_time):
+        with Database() as db:
+            Dquery = """
+                    SELECT present_datetime
+                    FROM doctor
+                    WHERE present_datetime = %s;
+                    """
+            db.cur.execute(Dquery, date_time)
+            
+            if db.cur.fetchone():
+                Vquery = """
+                        SELECT reserved_datetime 
+                        FROM appointment
+                        WHERE reserved_datetime = %s;
+                        """ 
+                db.cur.execute(Vquery, date_time)
+                if not db.cur.fetchone():
+                    return date_time, True
+                else:
+                    return exc.ReservedDateTime(), False
+            else:
+                return exc.NotExistDateTime(), False
+    else:
+        return exc.InvalidDateTime(), False
+    
+    
 def account_exist(input_data):
     """ national code already exist?!"""    
     input_data: (1, 2, 3)

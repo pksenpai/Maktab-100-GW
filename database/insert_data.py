@@ -36,78 +36,16 @@ class InsertToHealthInsuranceTable:
         # self.conn.close()
 
 
-class InsertToDoctorTable:
-    def __init__(self):
-        self.conn = None
-        self.cur = None
-        self.local_connection = None
-        # self.result = None
-        # self.err = None
-        self.doctor = None
-        # self.exc_type = None
-        # self.exc_val = None
-
-    def __enter__(self):
-        return self
-
-
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-        # self.cur.close()
-        # self.conn.close()
-
-
-class InsertToPatientTable:
-    def __init__(self):
-        self.conn = None
-        self.cur = None
-        self.local_connection = None
-        # self.result = None
-        # self.err = None
-        # self.patient = None
-        # self.exc_type = None
-        # self.exc_val = None
-
-    def __enter__(self):
-        return self
-
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-        # self.cur.close()
-        # self.conn.close()
-
-
-class InsertToAppointmentTable:
-    def __init__(self):
-        self.conn = None
-        self.cur = None
-        self.local_connection = None
-        # self.result = None
-        # self.err = None
-        # self.health_insurace = None
-        # self.exc_type = None
-        # self.exc_val = None
-
-    def __enter__(self):
-        return self
-
-    def insert_to_database(self, patient_id, doctor_id, date_time, reason):
-        self.appointment = Appointment(patient_id, doctor_id, date_time, reason)
-        self.conn, self.cur, self.local_connection = connect(None, None)
-        query = """INSERT INTO appointment(patient_id, doctor_id, date_time, reason)
-             values (%s,%s,%s,%s);
-             """
-        data = (self.appointment.patient_id, self.appointment.doctor_id, self.appointment.date_time,
-                self.appointment.reason)
-        self.cur.execute(query, data)
-        self.conn.commit()
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-        # self.cur.close()
-        # self.conn.close()
+def insert_to_database(self, patient_id, doctor_id, date_time, reason):
+    self.appointment = Appointment(patient_id, doctor_id, date_time, reason)
+    self.conn, self.cur, self.local_connection = connect(None, None)
+    query = """INSERT INTO appointment(patient_id, doctor_id, date_time, reason)
+            values (%s,%s,%s,%s);
+            """
+    data = (self.appointment.patient_id, self.appointment.doctor_id, self.appointment.date_time,
+            self.appointment.reason)
+    self.cur.execute(query, data)
+    self.conn.commit()
 
 
 class InsertToPatientHistoryTable:

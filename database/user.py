@@ -1,7 +1,7 @@
 from connect_to_db import Database
 from exception import MyException as exc
 import Validations as val
-import pickle
+from visit import *
 
 
 #=============================[USER]=============================>
@@ -24,17 +24,19 @@ class User:
         input_password = hashlib.sha256(input("Enter your password: ").encode()).hexdigest()
         
         input_data = (user_type, input_national_code, input_password)
-        gender, fName, lName = val.valid_login(input_data)
+        user_data = val.valid_login(input_data)
+        self.gender, self.first_name, self.last_name = user_data
+        self.national_code = input_national_code
         
-        if name:
+        if user_data:
             self.login_status = True
             if user_type=='doctor':       
-                print(f'Welcome dr.{fname} {lName} :D')
+                print(f'Welcome dr.{self.first_name} {self.last_name} :D')
             else:
-                if gender=='f':
-                    print(f'Welcome ms.{fname} {lName} :D')
-                elif gender=='m':
-                    print(f'Welcome mr.{fname} {lName} :D')
+                if self.gender=='f':
+                    print(f'Welcome ms.{self.first_name} {self.last_name} :D')
+                elif self.gender=='m':
+                    print(f'Welcome mr.{self.first_name} {self.last_name} :D')
                     
 #=============================[DOCTOR]=============================>
 
@@ -67,13 +69,15 @@ class Doctor(User):
         else:  
             p_flag, g_flag = False, False
             
-            while p_flag=='False':
+            while p_flag==False:
                 password = input("Please enter your password: ")
                 valid_password, p_flag = val.valid_pass(password)
-            
-            while g_flag=='False':
+                print(f'[{valid_password}]')
+                
+            while g_flag==False:
                 gender = input("Please enter your gender[f/m]: ")
                 valid_gender, g_flag = val.valid_gender(gender)
+                print(f'[{valid_gender}]')
                 
             self.__password = valid_password
             self.gender = valid_gender
@@ -103,8 +107,7 @@ class Doctor(User):
                 db.conn.commit()
                 print(f"congratulation dr.{self.filename}!\nyour account created! :3")
     
-    
-    
+
 #=============================[PATIENT]=============================>
     
 class Patient(User):
@@ -118,6 +121,19 @@ class Patient(User):
         
         self.health_insurance_id = None
 
+    def visit_history(self):
+        pass
+    
+    def visit_reserve(self):
+        while dt_flag==False:
+            date_time = input("choose a date & time for visit[day/month/year hour:min]: ")
+            valid_date_time, dt_flag = val.valid_datetime(date_time)
+            print(f'[{valid_date_time}]')
+        
+        reason = input()
+        name = self.first_name, self.last_name
+        print(visit_reserve(date_time, reason, name, self.gender))
+        
     def patient_register(self):
         self.national_code = input("Please enter your national code: ")
         self.health_insurance_id = input("Please enter your  health_insurance_id: ")
@@ -136,13 +152,15 @@ class Patient(User):
         else:
             p_flag, g_flag = False, False
             
-            while p_flag=='False':
+            while p_flag==False:
                 password = input("Please enter your password: ")
                 valid_password, p_flag = val.valid_pass(password)
-            
-            while g_flag=='False':
+                print(f'[{valid_password}]')
+                
+            while g_flag==False:
                 gender = input("Please enter your gender[f/m]: ")
                 valid_gender, g_flag = val.valid_gender(gender)
+                print(f'[{valid_gender}]')
                 
             self.__password = valid_password
             self.gender = valid_gender

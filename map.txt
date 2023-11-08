@@ -1,0 +1,17 @@
+soroush Hospital
+	|----------> patient
+	 		|----------> login
+	 				|---------> visit
+	 					      |----------> visit histoy
+	 					      |----------> visit reserve
+	 					      
+	 		|----------> regster
+	 		
+	 |----------> doctor
+	  		|----------> login
+	  			       |----------> visit
+	  			       		      |----------> visit histoy
+	  			       		      
+	  			       |----------> medical record 
+	  			       		     
+	 		|----------> regster

@@ -40,11 +40,12 @@ def create_table_doctor():
         login_status BOOLEAN NOT NULL ,
         national_code VARCHAR(20) UNIQUE NOT NULL ,
         medical_council_code VARCHAR(25) NOT NULL UNIQUE ,
-        specialization VARCHAR(50)
+        specialization VARCHAR(50),
+        present_datetime VARCHAR(100) NOT NULL
          
     );
     """
-    cur.execute(query)
+    cur.execute(query) # present_datatime VARCHAR(100) NOT NULL --> added!
     conn.commit()
 
 
@@ -57,7 +58,7 @@ def create_table_appointment():
         FOREIGN KEY (patient_id) REFERENCES patient (patient_id) ,
         doctor_id INT,
         FOREIGN KEY (doctor_id) REFERENCES doctor (doctor_id) ,
-        date_time VARCHAR(50) NOT NULL,
+        reserved_datetime VARCHAR(100) NOT NULL,
         reason  VARCHAR(100)
     );
     """
@@ -120,4 +121,9 @@ def create_table_patient_bill():
 
 
 if __name__ == '__main__':
-    create_table_doctor(True)
+    create_table_doctor()
+    create_table_health_insurance()
+    create_table_patient()
+    create_table_appointment()
+    create_table_patient_history()
+    create_table_patient_bill()
