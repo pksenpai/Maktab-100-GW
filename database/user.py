@@ -1,9 +1,10 @@
 from connect_to_db import Database
-import exception as exc
+from exception import MyException as exc
 import Validations as val
 import pickle
 
 
+#=============================[USER]=============================>
 class User:
     def __init__(self):
         self.first_name = None
@@ -35,6 +36,7 @@ class User:
                 elif gender=='m':
                     print(f'Welcome mr.{fname} {lName} :D')
                     
+#=============================[DOCTOR]=============================>
 
 class Doctor(User):
     def __init__(self, first_name, last_name, gender, birth_date,
@@ -62,16 +64,26 @@ class Doctor(User):
             print(exc.AlreadyExist(self.medical_council_code))
             return 'menu_setter.core.back'
         
-        else:    
+        else:  
+            p_flag, g_flag = False, False
+            
+            while p_flag=='False':
+                password = input("Please enter your password: ")
+                valid_password, p_flag = val.valid_pass(password)
+            
+            while g_flag=='False':
+                gender = input("Please enter your gender[f/m]: ")
+                valid_gender, g_flag = val.valid_gender(gender)
+                
+            self.__password = valid_password
+            self.gender = valid_gender
             self.first_name = input("Please enter your first name: ")
             self.last_name = input("Please enter your last name: ")
-            self.gender = input("Please enter your gender: ")
             self.birth_date = input("Please enter your birth_date: ")
             self.phone = input("Please enter your phone: ")
             self.email = input("Please enter your email: ")
             self.address = input("Please enter your address: ")
             self.specialization = input("Please enter your specialization: ")
-            self.__password = input("Please enter your password: ")
             
             with Database() as db:
                 query = """
@@ -93,7 +105,7 @@ class Doctor(User):
     
     
     
-#==========================================================
+#=============================[PATIENT]=============================>
     
 class Patient(User):
     def __init__(self, first_name, last_name, gender, birth_date,
@@ -122,14 +134,25 @@ class Patient(User):
             return 'menu_setter.core.back'
                     
         else:
+            p_flag, g_flag = False, False
+            
+            while p_flag=='False':
+                password = input("Please enter your password: ")
+                valid_password, p_flag = val.valid_pass(password)
+            
+            while g_flag=='False':
+                gender = input("Please enter your gender[f/m]: ")
+                valid_gender, g_flag = val.valid_gender(gender)
+                
+            self.__password = valid_password
+            self.gender = valid_gender
             self.first_name = input("Please enter your first name: ")
             self.last_name = input("Please enter your last name: ")
-            self.gender = input("Please enter your gender: ")
             self.birth_date = input("Please enter your birth_date: ")
             self.phone = input("Please enter your phone: ")
             self.email = input("Please enter your email: ")
             self.address = input("Please enter your address: ")
-            self.__password = input("Please enter your password: ")
+
 
             with Database() as db:
                 query = """
@@ -147,5 +170,10 @@ class Patient(User):
 
                 db.cur.execute(query, data)
                 db.conn.commit()
-    
+                
+                if self.gender=='f':
+                    print(f"congratulation ms.{self.filename}!\nyour account created! :3")
+                elif self.gender=='m':
+                    print(f"congratulation mr.{self.filename}!\nyour account created! :3")
+                    
     

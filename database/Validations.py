@@ -1,17 +1,23 @@
 import hashlib
 import re
-from exception import InvalidPassword
+from exception import MyException as exc
 from connect_to_db import Database
 
 
 def valid_pass(password):
     pass_regex = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
     print(password)
-    if not re.match(pass_regex, password):
-        raise InvalidPassword()
+    if re.match(pass_regex, password):
+        return hashlib.sha256(str(password).encode('utf-8')).hexdigest(), True
     else:
-        return hashlib.sha256(str(password).encode('utf-8')).hexdigest()
-    
+        return exc.InvalidPassword(), False        
+
+def valid_gender(gender):
+    if gender=='f' or gender=='m':
+        return gender, True
+    else:
+        return exc.InvalidGender(), False
+
 def valid_login(input_data: tuple):
     input_data: (table_name, national_code, password)
     
