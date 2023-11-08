@@ -1,6 +1,7 @@
 from connect_to_db import connect
 
 
+
 def create_table_patient():
     conn, cur, local_connection = connect(None, None)
     query = """
@@ -118,5 +119,5 @@ def create_table_patient_bill():
     conn.commit()
 
 
-# if __name__ == '__main__':
-#     create_table_doctor(True)
+if __name__ == '__main__':
+    create_table_doctor(True)

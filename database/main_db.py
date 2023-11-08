@@ -104,23 +104,7 @@ from connect_to_db import connect
 # register_doctor()
 
 
-# def login_doctor():
-#     user_name = input("Please enter your user name: ")
-#     input_password = input("Please enter your password: ")
-#
-#     conn, cur, local_connection = connect(None, None)
-#     query = """select  * FROM doctor
-#                 WHERE national_code = %s AND password = %s;
-#                  """
-#     data = (user_name, input_password)
-#     cur.execute(query, data)
-#     result = cur.fetchone()
-#     if result:
-#         query = """UPDATE doctor
-#         SET login_status = True
-#         """
-#     cur.execute(query)
-#     conn.commit()
+
 #
 # def logout_doctor():
 #
