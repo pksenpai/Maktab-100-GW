@@ -72,28 +72,6 @@ class InsertToPatientTable:
     def __enter__(self):
         return self
 
-    def insert_to_database(self, first_name, last_name, gender, birth_date,
-                           phone, email, address, password, login_status,
-                           national_code, health_insurance_id):
-        self.patient = Patient(first_name, last_name, gender, birth_date,
-                               phone, email, address, password, login_status,
-                               national_code, health_insurance_id)
-        # self.patient.patient_id = None
-        self.conn, self.cur, self.local_connection = connect(None, None)
-        query = """INSERT INTO patient(first_name, last_name, gender, birth_date,
-                                        phone, email, address, password, login_status,
-                                        national_code, health_insurance_id
-                                        )
-             values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
-             """
-        data = (self.patient.first_name, self.patient.last_name, self.patient.gender, self.patient.birth_date,
-                self.patient.phone, self.patient.email, self.patient.address,
-                self.patient.password, self.patient.login_status,
-                self.patient.national_code, self.patient.health_insurance_id
-                )
-
-        self.cur.execute(query, data)
-        self.conn.commit()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass

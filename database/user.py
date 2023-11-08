@@ -5,19 +5,16 @@ import pickle
 
 
 class User:
-    def __init__(self, first_name, last_name, gender, 
-                 birth_date, phone, email, address, 
-                 password, national_code, login_status):
-
-        self.first_name = first_name
-        self.last_name = last_name
-        self.gender = gender
-        self.birth_date = birth_date
-        self.phone = phone
-        self.email = email
-        self.address = address
-        self.__password = password
-        self.national_code = national_code
+    def __init__(self):
+        self.first_name = None
+        self.last_name = None
+        self.gender = None
+        self.birth_date = None
+        self.phone = None
+        self.email = None
+        self.address = None
+        self.__password = None
+        self.national_code = None
         self.login_status = False
     
     def login(self, user_type: str):                    
@@ -26,12 +23,18 @@ class User:
         input_password = hashlib.sha256(input("Enter your password: ").encode()).hexdigest()
         
         input_data = (user_type, input_national_code, input_password)
-        name = val.valid_login(input_data)
+        gender, fName, lName = val.valid_login(input_data)
         
         if name:
-            self.login_status = True             
-            print(f'Welcome {name} :D')
-
+            self.login_status = True
+            if user_type=='doctor':       
+                print(f'Welcome dr.{fname} {lName} :D')
+            else:
+                if gender=='f':
+                    print(f'Welcome ms.{fname} {lName} :D')
+                elif gender=='m':
+                    print(f'Welcome mr.{fname} {lName} :D')
+                    
 
 class Doctor(User):
     def __init__(self, first_name, last_name, gender, birth_date,
@@ -41,9 +44,8 @@ class Doctor(User):
         super().__init__(first_name, last_name, gender, birth_date,
                          phone, email, address, password,
                          login_status, national_code)
-        
-        self.medical_council_code = medical_council_code
-        self.specialization = specialization
+        self.medical_council_code = None
+        self.specialization = None
 
     def doctor_register(self):
         self.national_code = input("Please enter your national code: ")
@@ -53,11 +55,11 @@ class Doctor(User):
         exist_national_code, exist_medical_council_code = val.account_exist(input_data)
         
         if exist_national_code:
-            print(exc.already_exist(self.national_code))
+            print(exc.AlreadyExist(self.national_code))
             return 'menu_setter.core.back'
         
         elif exist_medical_council_code:
-            print(exc.already_exist(self.medical_council_code))
+            print(exc.AlreadyExist(self.medical_council_code))
             return 'menu_setter.core.back'
         
         else:    
@@ -78,12 +80,15 @@ class Doctor(User):
                                             medical_council_code, specialization)
                                             values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
                         """
-                data = (self.first_name, self.last_name, self.gender, self.birth_date,
+                data = (
+                        self.first_name, self.last_name, self.gender, self.birth_date,
                         self.phone, self.email, self.address, self.__password,
                         self.login_status, self.national_code,
-                        self.medical_council_code, self.specialization)
+                        self.medical_council_code, self.specialization
+                    )
 
                 db.cur.execute(query, data)
+                db.conn.commit()
                 print(f"congratulation dr.{self.filename}!\nyour account created! :3")
     
     
@@ -99,8 +104,48 @@ class Patient(User):
                          phone, email, address, password,
                          login_status, national_code)
         
-        self.health_insurance_id = health_insurance_id
+        self.health_insurance_id = None
 
     def patient_register(self):
-        pass
+        self.national_code = input("Please enter your national code: ")
+        self.health_insurance_id = input("Please enter your  health_insurance_id: ")
+        
+        input_data = (table_name, self.national_code, self.health_insurance_id)
+        exist_national_code, exist_health_insurance_id = val.account_exist(input_data)
+        
+        if exist_national_code:
+            print(exc.AlreadyExist(self.national_code))
+            return 'menu_setter.core.back'
+        
+        elif exist_health_insurance_id:
+            print(exc.AlreadyExist(self.health_insurance_id))
+            return 'menu_setter.core.back'
+                    
+        else:
+            self.first_name = input("Please enter your first name: ")
+            self.last_name = input("Please enter your last name: ")
+            self.gender = input("Please enter your gender: ")
+            self.birth_date = input("Please enter your birth_date: ")
+            self.phone = input("Please enter your phone: ")
+            self.email = input("Please enter your email: ")
+            self.address = input("Please enter your address: ")
+            self.__password = input("Please enter your password: ")
+
+            with Database() as db:
+                query = """
+                        INSERT INTO patient(first_name, last_name, gender, birth_date,
+                                                phone, email, address, password, login_status,
+                                                national_code, health_insurance_id)
+                                                values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
+                        """
+                data = (
+                        self.first_name, self.last_name, self.gender, self.birth_date,
+                        self.phone, self.email, self.address,
+                        self.password, self.login_status,
+                        self.national_code, self.health_insurance_id
+                    )
+
+                db.cur.execute(query, data)
+                db.conn.commit()
+    
     

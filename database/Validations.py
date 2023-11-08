@@ -1,5 +1,6 @@
 import hashlib
 import re
+from exception import InvalidPassword
 from connect_to_db import Database
 
 
@@ -7,8 +8,7 @@ def valid_pass(password):
     pass_regex = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
     print(password)
     if not re.match(pass_regex, password):
-        # raise InvalidPassword('زمر عبور معتبر نیست')
-        print('رمز عبور معتبر نیست')
+        raise InvalidPassword()
     else:
         return hashlib.sha256(str(password).encode('utf-8')).hexdigest()
     
@@ -17,7 +17,7 @@ def valid_login(input_data: tuple):
     
     with Database() as db:
         query = """
-                SELECT first_name, last_name FROM %s
+                SELECT gender, first_name, last_name FROM %s
                 WHERE national_code = %s AND password = %s;
                 """
         

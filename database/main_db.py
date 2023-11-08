@@ -116,21 +116,7 @@ from connect_to_db import connect
 #     conn.commit()
 
 # def register_patient():
-#     first_name = input("Please enter your first name: ")
-#     last_name = input("Please enter your last name: ")
-#     gender = input("Please enter your gender: ")
-#     birth_date = input("Please enter your birth_date: ")
-#     phone = input("Please enter your phone: ")
-#     email = input("Please enter your email: ")
-#     address = input("Please enter your address: ")
-#     password = input("Please enter your password: ")
-#     national_code = input("Please enter your national code: ")
-#     health_insurance_id = input("Please enter your  health_insurance_id: ")
-#     login_status = False
-#     with InsertToPatientTable() as PT:
-#         PT.insert_to_database(first_name, last_name, gender, birth_date,
-#                               phone, email, address, password, login_status,
-#                               national_code, health_insurance_id)
+
 #
 #
 # register_patient()
