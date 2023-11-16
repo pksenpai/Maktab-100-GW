@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- {% block header-setting %} -->
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/bootstrap.bundle.min.js">
+  <link rel="stylesheet" href="bootstrap/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+  <!-- <link rel="stylesheet" href="bootstrap/iranyekan"> -->
+  <!-- {% endblock %} -->
+  <title>{% block title %}PK-GAME{% endblock %}</title>
+</head>
+<body class="bg-info">
+  <!-- my web navigation -->
+  {% block nav %}
+  <header>
+    <nav class="p-1 text-bg-dark border-bottom">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+
+            <img class="bi me-2" src="{% static 'logo.png' %}" width="75" height="70" aria-label="Bootstrap"/>
+          </a>
+  
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 text-info">HOME</a></li>
+            <li><a href="/games" class="nav-link px-2 text-white">GAMES</a></li>
+            <li><a href="/faqs" class="nav-link px-2 text-white">FAQs</a></li>
+            <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+          </ul>
+  
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control form-control-dark text-bg-white" placeholder="Search..." aria-label="Search">
+          </form>
+  
+          <div class="text-end">
+            <a href="/login"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+            <a href="/signup"><button type="button" class="btn btn-warning">Sign-up</button></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {% endblock %}
+  
+  <main>
+    <div id="body">{% block body %}{% endblock %}</div>
+  </main>
+</body>
+</html>

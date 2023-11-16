@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% for doctor in doc %}
+<div class="text-center">
+    <h3>{{ doctor.first_name }} {{ doctor.last_name }}</h3>
+    <p>{{ doctor.specialization }}</p>
+</div>
+{% endfor %}
+{% endblock %}

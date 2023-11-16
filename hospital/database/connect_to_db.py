@@ -20,13 +20,13 @@ class Database:
         self.local_connection = None
     
     def __enter__(self):
-        if conn and cur:
-            conn, cur, local_connection = conn, cur, False
+        if self.conn and self.cur:
+            self.conn, self.cur, self.local_connection = self.conn, self.cur, False
         else:
             try:
                 params = self.db_config
                 self.conn = psycopg2.connect(**params)
-                self.cur = conn.cursor()
+                self.cur = self.conn.cursor()
                 self.local_connection = True
             
             except (Exception, psycopg2.DatabaseError) as e:
