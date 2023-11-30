@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <title>calc</title>
+</head>
+<body class="container bg-warning">
+    <div class=" d-flex justify-content-center align-items-center">
+        <div class="dropdown-menu d-block position-static border-0 pt-0 mx-0 rounded-3 w-25
+                    bg-dark shadow overflow-hidden w-280px mt-3" data-bs-theme="dark">
+            <form class="p-2 mb-2 bg-dark border-bottom border-dark">
+            <input id="num1" type="search" class="form-control bg-dark text-white" autocomplete="false" placeholder="Type to filter...">
+            <input id="num2" type="search" class="form-control bg-dark text-white" autocomplete="false" placeholder="Type to filter...">
+            </form>
+            <ul class="list-unstyled mb-0 bg-dark">
+            <li><a id="zarb" class="dropdown-item d-flex align-items-center gap-2 py-2 text-white" href="#">
+                <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                zarb
+            </a></li>
+            <li><a id="taghsim" class="dropdown-item d-flex align-items-center gap-2 py-2 text-white" href="#">
+                <span class="d-inline-block bg-primary rounded-circle p-1"></span>
+                taghsim
+            </a></li>
+            <li><a id="jam" class="dropdown-item d-flex align-items-center gap-2 py-2 text-white" href="#">
+                <i class="bi bi-plus"></i>
+                jam
+            </a></li>
+            <li><a id="menha" class="dropdown-item d-flex align-items-center gap-2 py-2 text-white" href="#">
+                <i class="bi bi-dash-square"></i>
+                menha
+            </a></li>
+            </ul>
+            <h1 id="result" class="text-center text-white"></h1>
+        </div>
+    </div>
+<script>
+let result = document.getElementById("result")
+function parsa(){
+    let num1 = parseFloat(document.querySelector("#num1").value);
+    let num2 = parseFloat(document.querySelector("#num2").value);
+    return new Array(num1,num2)
+}
+
+document.getElementById("zarb").addEventListener('click', function(){
+    let nums = parsa()
+    result.textContent = nums[0]*nums[1]
+})
+
+document.getElementById("taghsim").addEventListener('click', function(){
+    let nums = parsa()
+    result.textContent = nums[0]/nums[1]
+})
+
+document.getElementById("jam").addEventListener('click', function(){
+    let nums = parsa()
+    result.textContent = nums[0]+nums[1]
+})
+
+document.getElementById("menha").addEventListener('click', function(){
+    let nums = parsa()
+    result.textContent = nums[0]-nums[1]
+})
+
+</script>
+</html>
