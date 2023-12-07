@@ -58,11 +58,11 @@ class PatientHistory(models.Model):
 
 
 class Visit(models.Model):
-    User = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user")
     time = models.DateTimeField()
     reason = models.CharField(max_length=200)
     patient_history = models.ForeignKey(
-        PatientHistory, on_delete=models.CASCADE, related_name="patient_history"
+        PatientHistory, on_delete=models.CASCADE, related_name="visit"
     )
 
 
