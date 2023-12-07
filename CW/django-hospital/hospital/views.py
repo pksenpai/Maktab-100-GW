@@ -1,22 +1,43 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
-from django.views.generic import ListView, CreateView
-# CBV, FBV
+from .forms import *
+from django.views.generic import ListView, CreateView, View
 
-# def show_doctors(request):
-#     doctors = Doctor.objects.select_related("specialization")
+
+def home(request):
+    template = "base.html"
+    return render(request, template, {})
+
+
+# class DoctorListView(ListView):
+#     queryset            = User.objects.filter(role='Doctor')
+#     template_name       = "doctor_list.html"
+#     context_object_name = "doc"
+
+
+class SignUpMixin(View):
+    form_class = MyForm
+    initial = {"key": "value"}
     
-#     return render(request, "doctor_list.html", {'doctors': doctors})
+class DoctorSignUpView(SignUpMixin): # name%%%
+    template_name = "form_template.html"
 
-class DoctorListView(ListView):
-    queryset            = Doctor.objects.select_related("specialization")
-    template_name       = "doctor_list.html"
-    context_object_name = "doc"
-    # template_name_suffix
 
-class DoctorSignUpView(CreateView):
-    model          = Doctor
-    template_name  = "doctor_form.html"
-    fields         = "__all__"
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # <process form cleaned data>
+            return HttpResponseRedirect("/success/")
+
+        return render(request, self.template_name, {"form": form})
     
+class PatientSignUpView(SignUpMixin): # name%%%
+    # form = PForm
+    template_name = "patient_signup_form.html"
+
+# class UserLogin()

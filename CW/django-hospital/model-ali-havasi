@@ -1,0 +1,86 @@
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+GENDER_CHOICES = [
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('O', 'Other'),
+]
+
+
+class User(AbstractUser):
+    date_of_birth = models.DateField(null=True, verbose_name="Date of Birth")
+    address       = models.CharField(max_length=255, null=True, verbose_name="Address")
+    gender        = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Gender")
+
+    class Meta:
+        verbose_name        = "User"
+        verbose_name_plural = "Users"
+
+    def __str__(self) -> str:
+        return f"{self.username} - {self.first_name.title()} {self.last_name.title()}" 
+
+
+class Specialization(models.Model):
+    specialization = models.CharField(max_length=100, verbose_name="Specialization")
+
+    class Meta:
+        verbose_name        = "Specialization"
+        verbose_name_plural = "Specializations"
+
+    def __str__(self) -> str:
+        return self.specialization
+
+
+class Doctor(models.Model):
+    user            = models.OneToOneField(User, on_delete=models.CASCADE, related_name="doctor", verbose_name="User")
+    specialization  = models.OneToOneField(Specialization, on_delete=models.SET_NULL, null=True, verbose_name="Specialization")
+    medical_license = models.CharField(max_length=10, verbose_name="MedicalLicense")
+
+    class Meta:
+        verbose_name        = "Doctor"
+        verbose_name_plural = "Doctors"
+
+    def __str__(self) -> str:
+        return f"{self.user.username} - Dr. {self.user.first_name.title()} {self.user.last_name.title()}" 
+
+
+class Patient(models.Model):
+    user           = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient", verbose_name="User")
+    medical_record = models.CharField(max_length=10, verbose_name="MedicalNumber")
+
+    class Meta:
+        verbose_name        = "Patient"
+        verbose_name_plural = "Patients"
+
+    def __str__(self) -> str:
+        return f"{self.user.username} - Pt. {self.user.first_name.title()} {self.user.last_name.title()}" 
+
+
+class Appointment(models.Model):
+    doctor    = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name="appointments", verbose_name="Doctor")
+    date_time = models.DateTimeField(verbose_name="Date/Time")
+    cost      = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cost")
+    available = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name        = "Appointment"
+        verbose_name_plural = "Appointments"
+
+    def __str__(self) -> str:
+        return f"Dr. {self.doctor.user.first_name.title()} {self.doctor.user.last_name.title()} - {self.date_time.strftime('%y-%m-%d %H:%M:%S')}" 
+
+
+class Visit(models.Model):
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, related_name="visit_appointment", verbose_name="Appointment")
+    patient     = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="visit_patient", verbose_name="Patient")
+    paid        = models.BooleanField(default=False, verbose_name="Paid")
+    paid_date   = models.DateTimeField(verbose_name="PaidDate")
+
+    class Meta:
+        verbose_name        = "Visit"
+        verbose_name_plural = "Visits"
+
+    def __str__(self):
+        return f"{self.patient.user.get_full_name()} - {self.paid_date.strftime('%y-%m-%d %H:%M:%S')} - {self.appointment.doctor.user.get_full_name()}"

@@ -1,0 +1,8 @@
+{% extends 'signup_base.html' %}
+
+{% block signup %}
+<form action="{% url 'hospital:p_signup' %}" method="POST"> {% csrf_token %}
+    {{ form.as_p }}
+    <button title="submit">submit</button>
+</form>
+{% endblock %}

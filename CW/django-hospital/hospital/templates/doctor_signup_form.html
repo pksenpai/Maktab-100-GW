@@ -1,0 +1,16 @@
+{% extends 'signup_base.html' %}
+
+{% block signup %}
+<form action="{% url 'hospital:d_signup' %}" method="POST"> {% csrf_token %}
+    <label>national code</label>
+    {{ form.national_code }}
+    <br class="mx-2">
+    <label>password</label>
+    {{ form.password1 }}
+    <br class="mx-2">
+    <label>re-password</label>
+    {{ form.password2 }}
+    <br class="mx-2">
+    <button title="submit">submit</button>
+</form>
+{% endblock %}
